@@ -1,0 +1,46 @@
+<script>
+    // Prevent forms from submitting.
+
+    function onSuccess(html) {
+      console.log("onSUccess: html:",html);
+      var div = document.getElementById("REC_TYPE");
+      div.innerHTML = html;
+  }
+
+    function preventFormSubmit() {
+        console.log("prevent submit, calling loadSettingsJSON()");
+        google.script.run.withSuccessHandler(onSuccess)
+      .loadRecTypes();
+
+
+      var forms = document.querySelectorAll('form');
+      for (var i = 0; i < forms.length; i++) {
+        forms[i].addEventListener('submit', function(event) {
+        event.preventDefault();
+        });
+      }
+    }
+    
+       
+    //process form with html return
+    function callback(html) {
+        document.getElementById("result").innerHTML=html;
+    }
+        
+    function handleFormSubmit(formObject) {
+        console.log("calling ProcessFOrm()",formObject);
+        const buttons = document.querySelectorAll('button');
+        for (var i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = true;
+        };
+      
+        
+        //google.script.run.processForm(formObject);
+        //document.getElementById("myForm").reset();
+
+        google.script.run.withSuccessHandler(callback).processForm(formObject);
+    }
+
+    window.addEventListener('load', preventFormSubmit);   
+
+  </script>

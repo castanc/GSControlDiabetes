@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <base target="_top">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <?!= include('frontend/Stylesheet'); ?>
+        <?!= include('frontend/Codebehind_js'); ?>  
+        <?!= include('frontend/index_js'); ?>  
+        <?!= include('frontend/sidemenu_css'); ?>  
+        
+    </head>
+    <body>
+        <div  id="main" class="container">
+            <div id="menu" class="row">
+                <div class="col-12">
+                    <button class="btn btn-primary" id="homeBtn" onclick="doHome()">Record</button>
+                    <button class="btn btn-primary" id="homeBtn" onclick="doHome()">Rec Types</button>
+                    <button class="btn btn-primary" id="homeBtn" onclick="doHome()">Items</button>
+                    <button class="btn btn-primary" id="homeBtn" onclick="doHome()">Units</button>
+                </div>
+            </div>
+            <div id="home" class="row">
+                <div class="col-6">
+                    <form id="myForm" onsubmit="handleFormSubmit(this)">
+                        <p class="h4 mb-4 text-center">Control Diabetes</p>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="FECHA">Fecha</label>
+                                <input type="date" class="form-control" id="FECHA" name="FECHA" placeholder="Sheet File Name">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="HORA">Hora</label>
+                                <input type="time" id = "HORA" name="HORA" placeholder="HH:MM" pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" class="inputs time" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="REC_TYPE">Record Type</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div id="REC_TYPE" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div id = "content">
+
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </form>
+                </div>
+            </div>      
+        </div>
+    </body>
+    <script>
+        // Prevent forms from submitting.
+
+        function onSuccess(html) {
+          console.log("onSUccess: html:",html);
+          var div = document.getElementById("REC_TYPE");
+          div.innerHTML = html;
+      }
+
+        function preventFormSubmit() {
+            console.log("prevent submit, calling loadSettingsJSON()");
+            google.script.run.withSuccessHandler(onSuccess)
+          .loadRecTypes();
+
+
+          var forms = document.querySelectorAll('form');
+          for (var i = 0; i < forms.length; i++) {
+            forms[i].addEventListener('submit', function(event) {
+            event.preventDefault();
+            });
+          }
+        }
+        
+           
+        //process form with html return
+        function callback(html) {
+            document.getElementById("result").innerHTML=html;
+        }
+            
+        function handleFormSubmit(formObject) {
+            console.log("calling ProcessFOrm()",formObject);
+            const buttons = document.querySelectorAll('button');
+            for (var i = 0; i < buttons.length; i++) {
+            buttons[i].disabled = true;
+            };
+          
+            
+            //google.script.run.processForm(formObject);
+            //document.getElementById("myForm").reset();
+
+            google.script.run.withSuccessHandler(callback).processForm(formObject);
+        }
+
+        window.addEventListener('load', preventFormSubmit);   
+
+      </script>
+</html>
+

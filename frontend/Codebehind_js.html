@@ -1,0 +1,27 @@
+<script>
+
+function renderRecTypes(list)    {
+    var html = `<select></select>`;
+    var div = document.getElementById("REC_TYPE");
+
+
+    div.innerHTML = html;
+}
+
+function recTypeChanged(e)
+{
+    console.log(`recTypeChanged() ${e}`);
+}
+
+function onHome(html){
+    console.log("onHome()", html);
+    var div = document.getElementById("home");
+    div.innerHTML= html;
+}
+function doHome(){
+    console.log("landing page");
+    var html = google.script.run.withSuccessHandler(onHome)
+          .doHome();
+}
+
+</script>
