@@ -1,46 +1,90 @@
 <script>
-    // Prevent forms from submitting.
+  // Prevent forms from submitting.
 
-    function onSuccess(html) {
-      console.log("onSUccess: html:",html);
-      var div = document.getElementById("REC_TYPE");
-      div.innerHTML = html;
+  function recTypeChanged(id, e) {
+    console.log(`id: ${id} recTypeChanged() ${e}`);
+    loadContent(e);
   }
 
-    function preventFormSubmit() {
-        console.log("prevent submit, calling loadSettingsJSON()");
-        google.script.run.withSuccessHandler(onSuccess)
-      .loadRecTypes();
+
+  function onSuccess(html) {
+    console.log("onSUccess: html:", html);
+    var div = document.getElementById("form");
+    div.innerHTML = html;
 
 
-      var forms = document.querySelectorAll('form');
-      for (var i = 0; i < forms.length; i++) {
-        forms[i].addEventListener('submit', function(event) {
+    var select = document.getElementById("SELECT_REC_TYPE");
+    try {
+      if (select.options.length > 0)
+        loadContent(select.options[0].value)
+    }
+    catch (ex) {
+      console.log("exceptioon selecting first item", ex);
+    }
+
+    var dt = new Date();
+    document.getElementById("FECHA").value = `${dt.getFullYear()}-${dt.getMonth()+1}-${dt.getDate()}`;
+    if ( dt.getHours()<12 )
+      document.getElementById("HORA").value = `${dt.getHours()}:${dt.getMinutes()} AM`;
+    else
+      document.getElementById("HORA").value = `${dt.getHours()-12}:${dt.getMinutes()} PM`;
+
+  }
+
+  function onSuccessContent(html) {
+    console.log("onSUccess: html:", html);
+    var div = document.getElementById("content");
+    div.innerHTML = html;
+  }
+
+
+  function loadContent(recType) {
+    google.script.run.withSuccessHandler(onSuccessContent)
+      .loadContent(recType);
+  }
+
+  function loadForm(formName) {
+    google.script.run.withSuccessHandler(onSuccess)
+      .loadForm(formName);
+
+  }
+
+  function preventFormSubmit() {
+    var forms = document.querySelectorAll('form');
+    for (var i = 0; i < forms.length; i++) {
+      forms[i].addEventListener('submit', function (event) {
         event.preventDefault();
-        });
-      }
+      });
     }
-    
-       
-    //process form with html return
-    function callback(html) {
-        document.getElementById("result").innerHTML=html;
-    }
-        
-    function handleFormSubmit(formObject) {
-        console.log("calling ProcessFOrm()",formObject);
-        const buttons = document.querySelectorAll('button');
-        for (var i = 0; i < buttons.length; i++) {
-        buttons[i].disabled = true;
-        };
-      
-        
-        //google.script.run.processForm(formObject);
-        //document.getElementById("myForm").reset();
+  }
 
-        google.script.run.withSuccessHandler(callback).processForm(formObject);
-    }
+  function initialize() {
+    console.log("initialize, loading form home");
+    loadForm("home");
+    preventFormSubmit();
+  }
 
-    window.addEventListener('load', preventFormSubmit);   
 
-  </script>
+  //process form with html return
+  function callback(html) {
+    document.getElementById("result").innerHTML = html;
+  }
+
+  function handleFormSubmit(formObject) {
+    console.log("calling ProcessFOrm()", formObject);
+    const buttons = document.querySelectorAll('button');
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].disabled = true;
+    };
+
+
+    //google.script.run.processForm(formObject);
+    //document.getElementById("myForm").reset();
+
+    google.script.run.withSuccessHandler(callback).processForm(formObject);
+  }
+
+  var recType = "";
+  window.addEventListener('load', initialize);
+
+</script>

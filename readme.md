@@ -20,8 +20,10 @@ https://www.w3schools.com/jsref/met_select_add.asp
 https://developers.google.com/apps-script/guides/html/best-practices
 
 ## version 34
-https://script.google.com/macros/s/AKfycbyvD4SR293_mjMD72RlnJxC13NtLP7wLIDImX1Z-Gw_nQVJQG5Z/exec
- AKfycbwB208l1BLa14eblzlJLta_hQ6_Wq1q5jN7wFzIqqyjv-dGxr9HroGT-S0pTFIw0zwSIQ @34
+https://script.google.com/macros/s/ AKfycby2JcVlYTi5BPVmGTMwu8CLSt6AsbvVQaFmQUR9r27d57mVOVX9fmQ5kx_3_zBeV10a4g/exec
+
+
+
  
 ## side bar menu
 https://www.codingnepalweb.com/2020/04/responsive-sidebar-menu-html-css.html
@@ -29,5 +31,9 @@ https://www.codingnepalweb.com/2020/04/responsive-sidebar-menu-html-css.html
 ## serve different pages in doGet
 https://stackoverflow.com/questions/15668119/linking-to-another-html-page-in-google-apps-script
 
+## javascript date proeprties
+https://www.w3schools.com/jsref/jsref_obj_date.asp
+must create instance: var dt = new Date();
 
-
+## can't run deployed version with clasp deploy
+https://github.com/google/clasp/issues/63
