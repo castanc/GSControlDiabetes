@@ -23,6 +23,7 @@
     }
 
     var dt = new Date();
+    console.log("date:",dt);
     document.getElementById("FECHA").value = `${dt.getFullYear()}-${dt.getMonth()+1}-${dt.getDate()}`;
     if ( dt.getHours()<12 )
       document.getElementById("HORA").value = `${dt.getHours()}:${dt.getMinutes()} AM`;
@@ -68,6 +69,8 @@
   //process form with html return
   function callback(html) {
     document.getElementById("result").innerHTML = html;
+    //document.getElementById("myForm").reset();
+
   }
 
   function handleFormSubmit(formObject) {
@@ -77,9 +80,6 @@
       buttons[i].disabled = true;
     };
 
-
-    //google.script.run.processForm(formObject);
-    //document.getElementById("myForm").reset();
 
     google.script.run.withSuccessHandler(callback).processForm(formObject);
   }

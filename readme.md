@@ -37,3 +37,7 @@ must create instance: var dt = new Date();
 
 ## can't run deployed version with clasp deploy
 https://github.com/google/clasp/issues/63
+
+## floating labels
+https://speckyboy.com/floating-form-label-plugins/
+https://github.com/redouglas/floatlabel
